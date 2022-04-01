@@ -27,11 +27,6 @@ function CreatePost() {
 
     }
 
-    function handleClear() {
-        setClear(title.value = '');
-        setClear(subTitle.value = '');
-        setClear(content.value = '');
-    }
 
     return (
         <div className="create-post">
@@ -52,7 +47,7 @@ function CreatePost() {
                     <label >Content</label>
                     <textarea {...content} />
                 </div>
-                <button className="create-post-btn" onClick={handleClear} > Create Post</button>
+                <button className="create-post-btn" > Create Post</button>
             </form>
         </div>
     )
