@@ -1,16 +1,12 @@
 
 import { db } from '../firebase-config';
 import { addDoc, collection } from 'firebase/firestore';
-import { useFormInput } from '../hooks';
-import { useState } from 'react';
-
+import { useFormInput } from '../hooks'; 
 function CreatePost() {
 
     const title = useFormInput('');
     const subTitle = useFormInput('');
     const content = useFormInput('');
-
-    const [clear , setClear] = useState('');
 
     // handleSubmit 
     function handleSubmit(event) {
@@ -31,7 +27,7 @@ function CreatePost() {
 
     }
 
-    function handleClear() {  
+    function handleClear() {
         setClear(title.value = '');
         setClear(subTitle.value = '');
         setClear(content.value = '');
