@@ -1,39 +1,63 @@
-import { useState } from "react";
+
+import { db } from '../firebase-config';
+import { addDoc, collection } from 'firebase/firestore';
+import { useFormInput } from '../hooks';
+import { useState } from 'react';
 
 function CreatePost() {
 
-    const [title, setTitle] = useState("");
-    const [subTitle, setSubTitle] = useState("");
-    const [content, setContent] = useState("");
+    const title = useFormInput('');
+    const subTitle = useFormInput('');
+    const content = useFormInput('');
+
+    const [clear , setClear] = useState('');
 
     // handleSubmit 
     function handleSubmit(event) {
+
+        if (title.value === '' || subTitle.value === '' || content.value === '') {
+            alert("field shoud not be empty");
+            return;
+        }
         event.preventDefault();
-        console.log("submit from");
-        console.log(title,"tit");
+
+        const addCollectionRef = collection(db, 'posts')
+        addDoc(addCollectionRef, {
+            title: title.value,
+            content: content.value,
+            subTitle: subTitle.value,
+            createdAt: new Date()
+        })
+
+    }
+
+    function handleClear() {  
+        setClear(title.value = '');
+        setClear(subTitle.value = '');
+        setClear(content.value = '');
     }
 
     return (
         <div className="create-post">
             <h1>Create Post</h1>
 
-       <form action="" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className="form-field">
                     <label >Title</label>
-                    <input value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input {...title} />
                 </div>
 
                 <div className="form-field">
                     <label >Sub Title</label>
-                    <input value={subTitle} onChange={(e) => setSubTitle(e.target.value)} />
+                    <input {...subTitle} />
                 </div>
 
                 <div className="form-field">
                     <label >Content</label>
-                    <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+                    <textarea {...content} />
                 </div>
-                <button className="create-post-btn"> Create Post</button>
-                </form>
+                <button className="create-post-btn" onClick={handleClear} > Create Post</button>
+            </form>
         </div>
     )
 }
