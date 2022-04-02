@@ -14,7 +14,7 @@ function App() {
     <Navbar/>
         <Routes>
           <Route exact path="/" element={<Home />} ></Route>
-          <Route exact path="post/:postId" element={<PostDetail />} > </Route>
+          <Route exact path="/post/:postId" element={<PostDetail />} > </Route>
           <Route extact path="/create-post" element={<CreatePost />} > </Route>
         </Routes>
       </div>
