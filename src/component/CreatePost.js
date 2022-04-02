@@ -1,17 +1,16 @@
 
 import { db } from '../firebase-config';
 import { addDoc, collection } from 'firebase/firestore';
-import { useFormInput } from '../hooks'; 
+import { useFormInput } from '../hooks';
+
 function CreatePost() {
 
     const title = useFormInput('');
     const subTitle = useFormInput('');
     const content = useFormInput('');
-
     // handleSubmit 
     function handleSubmit(event) {
-
-        if (title.value === '' || subTitle.value === '' || content.value === '') {
+        if (title.value === '' || content.value === '') {
             alert("field shoud not be empty");
             return;
         }
@@ -24,9 +23,7 @@ function CreatePost() {
             subTitle: subTitle.value,
             createdAt: new Date()
         })
-
     }
-
 
     return (
         <div className="create-post">
@@ -47,7 +44,7 @@ function CreatePost() {
                     <label >Content</label>
                     <textarea {...content} />
                 </div>
-                <button className="create-post-btn" > Create Post</button>
+                <button className="create-post-btn"> Create Post</button>
             </form>
         </div>
     )

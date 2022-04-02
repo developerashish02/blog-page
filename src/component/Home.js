@@ -23,8 +23,8 @@ function Home() {
             <h1>Tech Blogs</h1>
             <div id="blog-by">Ashish</div>
             {posts.map((post, index) => (
-                <div className="post" key={'post-${index}'}>
-                    <Link to={'post/${post.id}'}>
+                <div className="post" key={`post-${index}`}>
+                    <Link to={`post/${post.id}`}>
                         <h3>{post.title}</h3>
                     </Link>
 
