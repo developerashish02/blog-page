@@ -1,50 +1,68 @@
 
 import { db } from '../firebase-config';
 import { addDoc, collection } from 'firebase/firestore';
-import { useFormInput } from '../hooks';
+import { useState } from 'react';
 
 function CreatePost() {
+    // use hooks 
+    const [title, setTitle] = useState('');
+    const [subTitle, setSubTitle] = useState('');
+    const [content, setContent] = useState('');
 
-    const title = useFormInput('');
-    const subTitle = useFormInput('');
-    const content = useFormInput('');
-    // handleSubmit 
+    // handle submit 
     function handleSubmit(event) {
-        if (title.value === '' || content.value === '') {
+        // imput fields not shoud be empty 
+        if (title === '' || content === '') {
             alert("field shoud not be empty");
             return;
         }
+        // prevent default behaviour from automatically refresh 
         event.preventDefault();
-
+        // get the data and store in firebase 
         const addCollectionRef = collection(db, 'posts')
         addDoc(addCollectionRef, {
-            title: title.value,
-            content: content.value,
-            subTitle: subTitle.value,
+            title,
+            content,
+            subTitle,
             createdAt: new Date()
         })
-    }
+        alert("Submited Post");
 
+        // clean input  fieldset when form is submited 
+        setTitle(() => "");
+        setSubTitle(() => "");
+        setContent(() => "");
+    }
     return (
         <div className="create-post">
             <h1>Create Post</h1>
-
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
+                {/* take title input */}
                 <div className="form-field">
                     <label >Title</label>
-                    <input {...title} />
+                    <input
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
                 </div>
-
+                {/* take SubTitle input */}
                 <div className="form-field">
                     <label >Sub Title</label>
-                    <input {...subTitle} />
+                    <input
+                        value={subTitle}
+                        onChange={(e) => setSubTitle(e.target.value)}
+                    />
                 </div>
-
+                {/* take content input */}
                 <div className="form-field">
                     <label >Content</label>
-                    <textarea {...content} />
+                    <textarea
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                    />
                 </div>
-                <button className="create-post-btn"> Create Post</button>
+                {/* create post button  */}
+                <button className="create-post-btn" > Create Post</button>
             </form>
         </div>
     )
